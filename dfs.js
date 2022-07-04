@@ -33,6 +33,14 @@ dfs(2);
 
 // const graph_list = [[1], [0, 2, 4], [1, 3], [2], [1]];
 const graph_list = [[1, 2, 3], [0, 4, 5], [0], [0], [1], [1]];
+const graph_list2 = new Map([
+  [0, [1, 2, 3]],
+  [1, [0, 4, 5]],
+  [2, [0]],
+  [3, [0]],
+  [4, [1]],
+  [5, [1]],
+]);
 const visited_list = [...Array(graph_list.length)].fill(0);
 
 const dfs_list = (root) => {
@@ -47,6 +55,23 @@ const dfs_list = (root) => {
   graph_list[root].sort((a, b) => a - b); // 노드를 오름차순으로 방문해야 할 경우
   for (let i of graph_list[root]) {
     dfs_list(i);
+  }
+};
+
+const visited_list2 = [...Array(graph_list2.size)].fill(0);
+
+const dfs_list2 = (root) => {
+  if (visited_list2[root] == 1) {
+    return;
+  }
+  visited_list2[root] = 1;
+
+  // Do Something
+  console.log(root);
+
+  graph_list2.get(root).sort((a, b) => a - b); // 노드를 오름차순으로 방문해야 할 경우
+  for (let i of graph_list2.get(root)) {
+    dfs_list2(i);
   }
 };
 
@@ -70,6 +95,9 @@ const dfs_list_stack = (root) => {
 
 console.log("인접 리스트");
 dfs_list(0);
+
+console.log("인접 리스트 (Map 사용)");
+dfs_list2(0);
 
 console.log("인접 리스트 (재귀X)");
 dfs_list_stack(0);
