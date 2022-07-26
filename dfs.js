@@ -88,7 +88,7 @@ const dfs_list_stack = (root) => {
       console.log(n);
 
       // stack.push(...graph_list[n]);
-      stack.push(...[...graph_list[n]].sort((a, b) => b - a)); // 노드를 오름차순으로 방문해야 할 경우
+      stack.push(...graph_list[n].sort((a, b) => b - a)); // 노드를 오름차순으로 방문해야 할 경우
     }
   }
 };
@@ -101,3 +101,48 @@ dfs_list2(0);
 
 console.log("인접 리스트 (재귀X)");
 dfs_list_stack(0);
+
+const board = [
+  [0, 0, 0, 0, 0],
+  [1, 1, 0, 1, 0],
+  [0, 0, 0, 0, 1],
+  [0, 1, 1, 0, 0],
+  [0, 0, 0, 1, 0],
+];
+
+const [r, c] = [board.length, board[0].length]; // 노드 개수
+
+const visited_LRUD = [...Array(r)].map(() => Array(c).fill(0));
+
+const dfs_LRUD = (root_y, root_x) => {
+  // 좌표가 맵 밖으로 벗어나는지 체크
+  if (root_y < 0 || root_y >= r || root_x < 0 || root_x >= c) {
+    return;
+  }
+
+  // 벽 체크
+  if (board[root_y][root_x] == 1) {
+    return;
+  }
+
+  // 방문 체크
+  if (visited_LRUD[root_y][root_x] == 1) {
+    return;
+  }
+  visited_LRUD[root_y][root_x] = 1;
+
+  // Do Something
+  console.log(root_y, root_x);
+
+  for (const [dy, dx] of [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
+  ]) {
+    dfs_LRUD(root_y + dy, root_x + dx);
+  }
+};
+
+console.log("상하좌우 이동");
+dfs_LRUD(0, 0);
